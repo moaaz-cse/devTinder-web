@@ -8,6 +8,7 @@ import { BASE_URL } from "../utils/constants";
 const Login = () => {
   const [emailId, setEmailId] = useState("moaaz123@gmail.com");
   const [password, setPassword] = useState("Amoaaz@123");
+  const [error, setError] = useState();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogin = async () => {
@@ -23,7 +24,7 @@ const Login = () => {
       dispatch(addUser(res.data)); //this will add user to the userSlice and then to appStore
       navigate("/");
     } catch (err) {
-      console.error(err);
+      setError(err?.response?.data || "Something went wrong.");
     }
   };
 
@@ -72,6 +73,7 @@ const Login = () => {
               />
             </label>
           </div>
+          <p className="flex text-red-500 justify-center">{error}</p>
           <div className="card-actions justify-center">
             <button className="btn" onClick={handleLogin}>
               Login
