@@ -21,6 +21,13 @@ const Connections = () => {
   useEffect(() => {
     fetchConnections();
   }, []);
+  if (!connections) return;
+  if (connections.length === 0)
+    return (
+      <h1 className="flex justify-center p-6 text-xl text-green-500">
+        No Connection Found.
+      </h1>
+    );
   return (
     <div className="flex flex-col justify-center m-10">
       <p className="flex justify-center p-6 text-xl text-green-500">
@@ -28,7 +35,7 @@ const Connections = () => {
       </p>
       {connections &&
         connections.map((key) => {
-          return <ConnectionCard className="flex justify-center" user={key} />;
+          return <ConnectionCard key={key._id} className="flex justify-center" user={key} />;
         })}
     </div>
   );

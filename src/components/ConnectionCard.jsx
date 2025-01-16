@@ -4,7 +4,7 @@ const ConnectionCard = (user) => {
   user = user.user;
 
   return (
-    <div className="flex flex-col m-auto  max-w-fit">
+    <div className="flex flex-col m-auto  w-2/3">
       <div className="collapse collapse-plus bg-base-300 border border-lime-400 my-2">
         <input type="radio" name="my-accordion-3" defaultChecked />
         <div className="collapse-title font-semibold">
