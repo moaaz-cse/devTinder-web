@@ -1,11 +1,28 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React from "react";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
-import { addConnection } from "../utils/connectionSlice";
+import { removeRequest } from "../utils/requestsSlice";
 
 const RequestCard = (user) => {
   user = user.user.fromUserId;
+  const _id = user._id;
+  const dispatch = useDispatch();
+  const reviewRequest = async (status, _id) => {
+    console.log("URL => ", BASE_URL + "/request/review/" + status + "/" + _id);
+
+    try {
+      const res = await axios.post(
+        BASE_URL + "/request/review/" + status + "/" + _id,
+        {},
+        { withCredentials: true }
+      );
+      //   console.log("res => ", res);
+      dispatch(removeRequest(_id));
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div>
@@ -27,17 +44,29 @@ const RequestCard = (user) => {
               <div className="flex flex-col">
                 <div className="card-actions my-2">
                   {user.skills.map((skill) => {
-                    return <div key={skill} className="badge badge-outline">{skill}</div>;
+                    return (
+                      <div key={skill} className="badge badge-outline">
+                        {skill}
+                      </div>
+                    );
                   })}
                 </div>
                 <div className="flex gap-4 justify-center my-4">
                   <div className="card-actions justify-center">
-                    <button className="btn bg-green-500 btn-ghost border text-base-300">
+                    <button
+                      className="btn bg-green-500 btn-ghost border text-base-300"
+                      onClick={() => reviewRequest("accepted", _id)}
+                    >
                       Accept
                     </button>
                   </div>
                   <div className="card-actions justify-center">
-                    <button className="btn btn-secondary">Reject</button>
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => reviewRequest("rejected", _id)}
+                    >
+                      Reject
+                    </button>
                   </div>
                 </div>
               </div>

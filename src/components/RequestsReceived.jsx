@@ -32,6 +32,9 @@ const RequestsReceived = () => {
 
   return (
     <div>
+      <p className="flex justify-center p-6 text-xl text-green-500">
+        Connection Requests
+      </p>
       {requests &&
         requests.map((request) => {
           return <RequestCard user={request} />;
