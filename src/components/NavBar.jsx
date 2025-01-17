@@ -8,10 +8,15 @@ const NavBar = () => {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const handleLogout = async () => {
-    await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
-    dispatch(removeUser());
-    return navigate("/login");
+    try {
+      await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
+      dispatch(removeUser());
+      return navigate("/login");
+    } catch (err) {
+      console.error(err.message);
+    }
   };
   return (
     <div className="navbar bg-base-300">
@@ -47,7 +52,7 @@ const NavBar = () => {
                 <Link to="/connections">Connections</Link>
               </li>
               <li>
-                <Link to="/requests">requests</Link>
+                <Link to="/requests">Requests</Link>
               </li>
               <li>
                 <Link onClick={handleLogout}>Logout</Link>

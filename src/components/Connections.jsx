@@ -2,18 +2,19 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { addConnection } from "../utils/connectionSlice";
+import { addConnections } from "../utils/connectionSlice";
 import ConnectionCard from "./ConnectionCard";
 
 const Connections = () => {
   const connections = useSelector((store) => store.connections);
   const dispatch = useDispatch();
+
   const fetchConnections = async () => {
     try {
       const res = await axios.get(BASE_URL + "/user/connections", {
         withCredentials: true,
       });
-      dispatch(addConnection(res.data.data));
+      dispatch(addConnections(res.data.data));
     } catch (err) {
       console.error(err);
     }
@@ -34,8 +35,17 @@ const Connections = () => {
         CONNECTIONS
       </p>
       {connections &&
-        connections.map((key) => {
-          return <ConnectionCard key={key._id} className="flex justify-center" user={key} />;
+        connections.map((connection) => {
+          const { _id, firstName, lastName, photoUrl, age, gender, about } =
+            connection;
+
+          return (
+            <ConnectionCard
+              key={_id}
+              className="flex justify-center"
+              user={{ _id, firstName, lastName, photoUrl, age, gender, about }}
+            />
+          );
         })}
     </div>
   );

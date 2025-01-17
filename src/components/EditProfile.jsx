@@ -5,17 +5,20 @@ import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 
-const EditProfile = (user) => {
-  const [firstName, setFirstName] = useState(user.user.firstName);
-  const [lastName, setLastName] = useState(user.user.lastName);
-  const [photoUrl, setPhotoUrl] = useState(user.user.photoUrl);
-  const [age, setAge] = useState(user.user.age);
-  const [gender, setGender] = useState(user.user.gender);
-  const [skills, setSkills] = useState(user.user.skills);
-  const [about, setAbout] = useState(user.user.about);
+const EditProfile = ({ user }) => {
+  const [firstName, setFirstName] = useState(user.firstName);
+  const [lastName, setLastName] = useState(user.lastName);
+  const [photoUrl, setPhotoUrl] = useState(user.photoUrl);
+  const [age, setAge] = useState(user.age);
+  const [gender, setGender] = useState(user.gender);
+  const [skills, setSkills] = useState(user.skills);
+  const [about, setAbout] = useState(user.about);
+  const [error, setError] = useState("");
   const [showToast, setShowToast] = useState(false);
   const dispatch = useDispatch();
-  const handleSaveProfile = async () => {
+
+  const saveProfile = async () => {
+    setError("");
     try {
       const res = await axios.patch(
         BASE_URL + "/profile/edit",
@@ -37,7 +40,7 @@ const EditProfile = (user) => {
       }, 3000);
     } catch (err) {
       //TODO: Error handline
-      console.error(err);
+      setError(err.response.data);
     }
   };
 
@@ -107,13 +110,13 @@ const EditProfile = (user) => {
                       onChange={(e) => setAbout(e.target.value)}
                     />
                   </label> */}
-                   <textarea
-                      type="text"
-                      placeholder="Your Bio"
-                      className="textarea textarea-neutral  my-2 min-w-full"
-                      value={about}
-                      onChange={(e) => setAbout(e.target.value)}
-                    ></textarea>
+                  <textarea
+                    type="text"
+                    placeholder="Your Bio"
+                    className="textarea textarea-neutral  my-2 min-w-full"
+                    value={about}
+                    onChange={(e) => setAbout(e.target.value)}
+                  ></textarea>
                 </div>
                 <div className="flex flex-col items-start label pt-0 pb-0">
                   <span className="label-text">Skills</span>
@@ -142,7 +145,7 @@ const EditProfile = (user) => {
               <div className="card-actions justify-center">
                 <button
                   className="btn btn-secondary"
-                  onClick={handleSaveProfile}
+                  onClick={saveProfile}
                 >
                   Save Profile
                 </button>

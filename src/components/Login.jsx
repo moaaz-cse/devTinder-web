@@ -8,9 +8,10 @@ import { BASE_URL } from "../utils/constants";
 const Login = () => {
   const [emailId, setEmailId] = useState("moaaz123@gmail.com");
   const [password, setPassword] = useState("Amoaaz@123");
-  const [error, setError] = useState();
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
   const handleLogin = async () => {
     try {
       const res = await axios.post(

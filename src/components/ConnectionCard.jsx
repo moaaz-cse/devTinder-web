@@ -1,8 +1,8 @@
 import React from "react";
 
-const ConnectionCard = (user) => {
-  user = user.user;
-
+const ConnectionCard = ({user}) => {
+  // console.log("user",user);
+  
   return (
     <div className="flex flex-col m-auto  w-2/3">
       <div className="collapse collapse-plus bg-base-300 border border-lime-400 my-2">
