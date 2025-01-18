@@ -1,8 +1,8 @@
+import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { useEffect } from "react";
 import { addFeed } from "../utils/feedSlice";
+import { useEffect } from "react";
 import UserCard from "./UserCard";
 
 const Feed = () => {
@@ -17,8 +17,7 @@ const Feed = () => {
       });
       dispatch(addFeed(res?.data?.data));
     } catch (err) {
-      //TODO: handle error.
-      console.error(err);
+      //TODO: handle error
     }
   };
 
@@ -32,11 +31,10 @@ const Feed = () => {
 
   return (
     feed && (
-      <div className="flex justify-center my-4">
+      <div className="flex justify-center my-10">
         <UserCard user={feed[0]} />
       </div>
     )
   );
 };
-
 export default Feed;
